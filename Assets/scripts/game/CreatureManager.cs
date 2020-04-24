@@ -86,7 +86,7 @@ public class CreatureManager : MonoBehaviour
         }
         if (allDead)
         {
-            print("Returning");
+            
             state = State.Idle;
             return;
         }

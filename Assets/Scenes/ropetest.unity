@@ -1840,6 +1840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf9e05677a0c4d8594579b45c3d105a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1898281410 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 838641364145438915, guid: cc94872642ff84c118b36dc85dd300a8,

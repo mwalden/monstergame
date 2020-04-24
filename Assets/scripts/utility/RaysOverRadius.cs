@@ -30,8 +30,7 @@ public class RaysOverRadius : MonoBehaviour
         {
             
             float proposedDistance = Vector2.Distance(transform.localPosition, point);
-            float currentDistance = Vector2.Distance(transform.localPosition, p);
-            print(proposedDistance > currentDistance);
+            float currentDistance = Vector2.Distance(transform.localPosition, p);            
             if (proposedDistance > currentDistance)
             {
                 p = point;

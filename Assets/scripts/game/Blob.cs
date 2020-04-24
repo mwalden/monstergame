@@ -18,7 +18,6 @@ public class Blob : MonoBehaviour
     {
         if (activeLine.enabled)
         {
-            print(gameObject);
             if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) > 1f)
             {
                 activeLine.SetPosition(0, transform.position);
@@ -39,7 +38,7 @@ public class Blob : MonoBehaviour
         spring.autoConfigureConnectedAnchor = false;
         spring.autoConfigureDistance = false;
         spring.distance = .5f;
-        spring.frequency = 3;
+        spring.frequency = 2;
         activeSpring = spring;
 
         activeLine.SetPosition(0, transform.position);

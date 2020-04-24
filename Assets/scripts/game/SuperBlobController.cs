@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
+
 //https://www.reddit.com/r/Unity2D/comments/fqosoy/super_hyped_for_carrion_to_come_out_so_im_trying/
 public class SuperBlobController : MonoBehaviour
 {
     Camera cam = null;
     List<GameObject> subBlobs;
+    public LayerMask mask;
     Blob activeBlob;
     void Start()
     {
@@ -44,10 +48,38 @@ public class SuperBlobController : MonoBehaviour
                 activeBlob.detach();
             activeBlob = closestBlob.GetComponent<Blob>();
             Vector2 closestPoint = findClosestPoint(rays, mousePosition);
-            
+            List<GameObject> otherBlobs = subBlobs.Where(x => x != closestBlob && doesBlobHaveLineOfSight(x, closestPoint)).ToList<GameObject>();
+            applyForcesOnSubBlobs(otherBlobs,closestPoint);
             closestBlob.GetComponent<Blob>().attach(closestPoint);
 
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            applyForcesOnSubBlobs(subBlobs, new Vector2(50000,50000));
+        }
+    }
+
+    void applyForcesOnSubBlobs(List<GameObject> blobs,Vector2 vector)
+    {
+        
+        Vector2 force = (vector * 100);
+        print(blobs.Count + " :: " + force);
+        foreach (GameObject go in blobs)
+        {
+            go.GetComponent<Rigidbody2D>().AddForce(force,ForceMode2D.Force);
+        }
+    }
+
+    bool doesBlobHaveLineOfSight(GameObject blob, Vector3 destination)
+    {
+        Vector2 direction = destination - blob.transform.position;
+        float dist = (Vector2.Distance(blob.transform.position, direction));
+        RaycastHit2D ray = Physics2D.Raycast(blob.transform.position, direction, dist, mask);
+        if (ray.collider != null)
+            return Vector2.Distance(ray.point, destination) < 1;
+            
+        return false;
     }
     GameObject findClosestBlob(Vector2 mousePosition)
     {
@@ -63,7 +95,6 @@ public class SuperBlobController : MonoBehaviour
             }
         }
         
-        
         return go;
     }
 
@@ -77,7 +108,7 @@ public class SuperBlobController : MonoBehaviour
     Vector2 findClosestPoint(List<Vector2> rays, Vector2 mousePosition)
     {
         Vector2 closestRay = new Vector2(int.MaxValue,int.MaxValue);
-        print("Rays : " + rays.Count);
+        
         foreach (Vector2 ray in rays)
         {
             float currentClosestDistance = Vector2.Distance(closestRay,mousePosition) ;
