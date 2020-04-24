@@ -21,7 +21,7 @@ public class RaysOverRadius : MonoBehaviour
         activeLine.enabled = false;
         
     }
-    void findAndDrawLine(List<Vector2> points)
+    public void findAndDrawLine(List<Vector2> points)
     {
         Vector2 p = Vector2.zero;
         if (points.Count > 0)
@@ -64,7 +64,7 @@ public class RaysOverRadius : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            List<Vector2> points = drawRays(mousePosition);
+            List<Vector2> points = findPoints(mousePosition);
             if (points.Count >0)
                 findAndDrawLine(points);
         }
@@ -80,17 +80,14 @@ public class RaysOverRadius : MonoBehaviour
                 activeLine.SetPosition(0, transform.position);
             }
         }
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    drawRays(new Vector3(0, 0, 0));
-        //}
+      
     }
 
-    List<Vector2> drawRays(Vector3 vector)
+    public List<Vector2> findPoints(Vector3 vector)
     {
         List<Vector2> points = new List<Vector2>();
         Vector2 direction = vector - transform.position;
-        Debug.DrawRay(transform.position, vector - transform.position, Color.red);
+        Debug.DrawRay(transform.position, vector - transform.position, Color.red,5000);
         for (int i = 1;i< 5; i++)
         {
             Quaternion rotation = Quaternion.AngleAxis(5*i, Vector3.forward);
@@ -103,12 +100,9 @@ public class RaysOverRadius : MonoBehaviour
                 points.Add(ray.point);
             }
 
-            Debug.DrawRay(transform.position, rotatedDirection, Color.green);
+            Debug.DrawRay(transform.position, rotatedDirection, Color.green,5000);
         }
         return points;
-
-
-
     }
 }
 
