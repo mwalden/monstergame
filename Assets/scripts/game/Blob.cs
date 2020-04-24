@@ -18,6 +18,7 @@ public class Blob : MonoBehaviour
     {
         if (activeLine.enabled)
         {
+            print(gameObject);
             if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) > 1f)
             {
                 activeLine.SetPosition(0, transform.position);
@@ -32,11 +33,6 @@ public class Blob : MonoBehaviour
 
     public void attach(Vector2 position)
     {
-        activeLine.SetPosition(0, transform.position);
-        activeLine.SetPosition(1, position);
-        GetComponent<Rigidbody2D>().AddForce(position);
-        activeLine.enabled = true;
-        //SpringJoint2D spring = Instantiate<SpringJoint2D>(sp2d, transform);
         SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
 
         spring.connectedAnchor = position;
@@ -45,6 +41,12 @@ public class Blob : MonoBehaviour
         spring.distance = .5f;
         spring.frequency = 3;
         activeSpring = spring;
+
+        activeLine.SetPosition(0, transform.position);
+        activeLine.SetPosition(1, position);
+        GetComponent<Rigidbody2D>().AddForce(position);
+        activeLine.enabled = true;
+        
     }
 
 
