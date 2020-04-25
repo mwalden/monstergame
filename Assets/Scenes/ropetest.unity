@@ -385,6 +385,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &579043832
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -704,6 +710,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &833199728
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -837,6 +849,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &873465110
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -996,6 +1014,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!1 &1253416856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,6 +2768,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &1898281418
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2955,6 +2985,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &1956589618
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -3088,6 +3124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a795d22a0ef904c00a68f25b3252465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedLines: 3
+  lineRendererPrefab: {fileID: 343703764575323335, guid: 8b507ace4770040598a71eaa545a6451,
+    type: 3}
+  springJointPrefab: {fileID: 7519853098725006975, guid: 5586f080f03544320b3019a09eec6412,
+    type: 3}
+  armIndex: 0
 --- !u!120 &1977597290
 LineRenderer:
   m_ObjectHideFlags: 0

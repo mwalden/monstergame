@@ -33,6 +33,7 @@ public class Blob : MonoBehaviour
             spring.distance = .5f;
             spring.frequency = 2;
             spring.breakForce = 4;
+            spring.anchor = new Vector2(-.4f, 0);
             spring.connectedBody = gameObject.GetComponent<Rigidbody2D>();
             line.enabled = false;
             spring.enabled = false;
