@@ -21,64 +21,64 @@ public class RaysOverRadius : MonoBehaviour
         activeLine.enabled = false;
         
     }
-    public void findAndDrawLine(List<Vector2> points)
-    {
-        Vector2 p = Vector2.zero;
-        if (points.Count > 0)
-            p = points[0];
-        foreach(Vector2 point in points)
-        {
+    //public void findAndDrawLine(List<Vector2> points)
+    //{
+    //    Vector2 p = Vector2.zero;
+    //    if (points.Count > 0)
+    //        p = points[0];
+    //    foreach(Vector2 point in points)
+    //    {
             
-            float proposedDistance = Vector2.Distance(transform.localPosition, point);
-            float currentDistance = Vector2.Distance(transform.localPosition, p);            
-            if (proposedDistance > currentDistance)
-            {
-                p = point;
-            }
+    //        float proposedDistance = Vector2.Distance(transform.localPosition, point);
+    //        float currentDistance = Vector2.Distance(transform.localPosition, p);            
+    //        if (proposedDistance > currentDistance)
+    //        {
+    //            p = point;
+    //        }
             
-        }
-        if (p != Vector2.zero)
-        {
-            Object.Destroy(activeSpring);
+    //    }
+    //    if (p != Vector2.zero)
+    //    {
+    //        Object.Destroy(activeSpring);
 
-            activeLine.SetPosition(0, transform.position);
-            activeLine.SetPosition(1, p);
-            GetComponent<Rigidbody2D>().AddForce(p);
-            activeLine.enabled = true;
-            //SpringJoint2D spring = Instantiate<SpringJoint2D>(sp2d, transform);
-            SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
+    //        activeLine.SetPosition(0, transform.position);
+    //        activeLine.SetPosition(1, p);
+    //        GetComponent<Rigidbody2D>().AddForce(p);
+    //        activeLine.enabled = true;
+    //        //SpringJoint2D spring = Instantiate<SpringJoint2D>(sp2d, transform);
+    //        SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
 
-            spring.connectedAnchor = p;
-            spring.autoConfigureConnectedAnchor = false;
-            spring.autoConfigureDistance = false;
-            spring.distance = .5f;
-            spring.frequency = 3;
-            activeSpring = spring;
-        }
+    //        spring.connectedAnchor = p;
+    //        spring.autoConfigureConnectedAnchor = false;
+    //        spring.autoConfigureDistance = false;
+    //        spring.distance = .5f;
+    //        spring.frequency = 3;
+    //        activeSpring = spring;
+    //    }
         
-    }
+    //}
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            List<Vector2> points = findPoints(mousePosition);
-            if (points.Count >0)
-                findAndDrawLine(points);
-        }
-        if (activeSpring != null)
-        {
-            if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) < 1f)
-            {
-                activeLine.enabled = false;
-            }
-            else
-            {
-                Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-                activeLine.SetPosition(0, transform.position);
-            }
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+        //    List<Vector2> points = findPoints(mousePosition);
+        //    if (points.Count >0)
+        //        findAndDrawLine(points);
+        //}
+        //if (activeSpring != null)
+        //{
+        //    if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) < 1f)
+        //    {
+        //        activeLine.enabled = false;
+        //    }
+        //    else
+        //    {
+        //        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+        //        activeLine.SetPosition(0, transform.position);
+        //    }
+        //}
       
     }
 
