@@ -17,8 +17,8 @@ public class RaysOverRadius : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        activeLine = GetComponent<LineRenderer>();
-        activeLine.enabled = false;
+        //activeLine = GetComponent<LineRenderer>();
+        //activeLine.enabled = false;
         
     }
     public void findAndDrawLine(List<Vector2> points)
@@ -37,56 +37,56 @@ public class RaysOverRadius : MonoBehaviour
             }
             
         }
-        if (p != Vector2.zero)
-        {
-            Object.Destroy(activeSpring);
+        //if (p != Vector2.zero)
+        //{
+        //    Object.Destroy(activeSpring);
 
-            activeLine.SetPosition(0, transform.position);
-            activeLine.SetPosition(1, p);
-            GetComponent<Rigidbody2D>().AddForce(p);
-            activeLine.enabled = true;
-            //SpringJoint2D spring = Instantiate<SpringJoint2D>(sp2d, transform);
-            SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
+        //    activeLine.SetPosition(0, transform.position);
+        //    activeLine.SetPosition(1, p);
+        //    GetComponent<Rigidbody2D>().AddForce(p);
+        //    activeLine.enabled = true;
+        //    //SpringJoint2D spring = Instantiate<SpringJoint2D>(sp2d, transform);
+        //    SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
 
-            spring.connectedAnchor = p;
-            spring.autoConfigureConnectedAnchor = false;
-            spring.autoConfigureDistance = false;
-            spring.distance = .5f;
-            spring.frequency = 3;
-            activeSpring = spring;
-        }
+        //    spring.connectedAnchor = p;
+        //    spring.autoConfigureConnectedAnchor = false;
+        //    spring.autoConfigureDistance = false;
+        //    spring.distance = .5f;
+        //    spring.frequency = 3;
+        //    activeSpring = spring;
+        //}
         
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            List<Vector2> points = findPoints(mousePosition);
-            if (points.Count >0)
-                findAndDrawLine(points);
-        }
-        if (activeSpring != null)
-        {
-            if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) < 1f)
-            {
-                activeLine.enabled = false;
-            }
-            else
-            {
-                Vector2 pos = new Vector2(transform.position.x, transform.position.y);
-                activeLine.SetPosition(0, transform.position);
-            }
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+        //    List<Vector2> points = findPoints(mousePosition);
+        //    if (points.Count >0)
+        //        findAndDrawLine(points);
+        //}
+        //if (activeSpring != null)
+        //{
+        //    if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) < 1f)
+        //    {
+        //        activeLine.enabled = false;
+        //    }
+        //    else
+        //    {
+        //        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+        //        activeLine.SetPosition(0, transform.position);
+        //    }
+        //}
       
     }
 
     public List<Vector2> findPoints(Vector3 vector)
     {
         List<Vector2> points = new List<Vector2>();
-        Vector2 direction = vector - transform.position;
-        Debug.DrawRay(transform.position, vector - transform.position, Color.red,5000);
+        Vector2 direction = (vector - transform.position) * length;
+        Debug.DrawRay(transform.position, vector - transform.position, Color.red);
         for (int i = 1;i< 5; i++)
         {
             Quaternion rotation = Quaternion.AngleAxis(5*i, Vector3.forward);
@@ -99,7 +99,7 @@ public class RaysOverRadius : MonoBehaviour
                 points.Add(ray.point);
             }
 
-            Debug.DrawRay(transform.position, rotatedDirection, Color.green,5000);
+            Debug.DrawRay(transform.position, rotatedDirection, Color.green);
         }
         return points;
     }

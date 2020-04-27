@@ -5,47 +5,51 @@ using UnityEngine;
 public class Blob : MonoBehaviour
 {
 
-    SpringJoint2D activeSpring;
-    LineRenderer activeLine;
+    public LineRenderer lineRendererPrefab;
+    public int maxTentacles;
+    public int armIndex;
+    public LineRenderer[] armArray;
+    
     // Start is called before the first frame update
     void Start()
     {
-        activeLine = GetComponent<LineRenderer>();
+        armArray = new LineRenderer[maxTentacles];
+        for (int i = 0; i < maxTentacles; i++)
+        {
+            LineRenderer lineRenderer = Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>();
+            lineRenderer.enabled = false;
+            armArray[i] = lineRenderer;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (activeLine.enabled)
-        {
-            if (Vector2.Distance(activeSpring.connectedAnchor, transform.position) > 1f)
-            {
-                activeLine.SetPosition(0, transform.position);
-            }
-        }
+        
     }
     public void detach()
     {
-        activeLine.enabled = false;
-        Object.Destroy(activeSpring);
+        //activeLine.enabled = false;
+        //Object.Destroy(activeSpring);
     }
 
-    public void attach(Vector2 position)
+    public void attach(Vector2 position,float maxSpeed)
     {
-        SpringJoint2D spring = gameObject.AddComponent(typeof(SpringJoint2D)) as SpringJoint2D;
-
-        spring.connectedAnchor = position;
-        spring.autoConfigureConnectedAnchor = false;
-        spring.autoConfigureDistance = false;
-        spring.distance = .5f;
-        spring.frequency = 2;
-        activeSpring = spring;
-
-        activeLine.SetPosition(0, transform.position);
-        activeLine.SetPosition(1, position);
-        GetComponent<Rigidbody2D>().AddForce(position);
-        activeLine.enabled = true;
         
+        if (armIndex > 2)
+            armIndex = 0;
+
+        LineRenderer lineRenderer = armArray[armIndex].GetComponent<LineRenderer>();
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, position);
+        
+        armIndex++;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Vector2 directionalVector = position - new Vector2(transform.position.x, transform.position.y);
+        Vector2 force = directionalVector * 10;
+        rb.AddForce(force);
     }
 
 

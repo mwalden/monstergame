@@ -58,9 +58,6 @@ public class CreatureManager : MonoBehaviour
 
         Vector3 destination = new Vector3(worldPoint.x, worldPoint.y, 0);
 
-        //DestroyImmediate(currentDestination);
-        //currentDestination = Instantiate(destinationPrefab, transform);
-        //currentDestination.transform.position = destination;
         foreach (Creature creature in creatures)
         {
             creature.GetComponent<NavMeshAgent>().destination = destination;
