@@ -142,3 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLength: 7
+  allowedDiff: 0.5
+  mask:
+    serializedVersion: 2
+    m_Bits: 256

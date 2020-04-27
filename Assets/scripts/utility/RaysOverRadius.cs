@@ -99,7 +99,19 @@ public class RaysOverRadius : MonoBehaviour
                 points.Add(ray.point);
             }
 
+            Quaternion rotationDown = Quaternion.AngleAxis(5 * -i, Vector3.forward);
+            Vector2 rotatedDirectionDown = rotationDown * direction;
+            float distDown = (Vector2.Distance(transform.position, rotatedDirectionDown));
+            RaycastHit2D rayDown = Physics2D.Raycast(transform.position, rotatedDirectionDown, distDown, mask);
+
+            if (rayDown.collider != null)
+            {
+                points.Add(rayDown.point);
+            }
+
+
             Debug.DrawRay(transform.position, rotatedDirection, Color.green);
+            Debug.DrawRay(transform.position, rotatedDirectionDown, Color.green);
         }
         return points;
     }
