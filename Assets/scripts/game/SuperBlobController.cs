@@ -10,6 +10,7 @@ public class SuperBlobController : MonoBehaviour
     Camera cam = null;
     List<GameObject> subBlobs;
     public LayerMask mask;
+    public float maxSpeed =5;
     Blob activeBlob;
     void Start()
     {
@@ -27,7 +28,7 @@ public class SuperBlobController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
             //Dictionary<GameObject, List<Vector2>> lines = collectAllLinesByGameObject(mousePosition);
@@ -50,24 +51,28 @@ public class SuperBlobController : MonoBehaviour
             Vector2 closestPoint = findClosestPoint(rays, mousePosition);
             List<GameObject> otherBlobs = subBlobs.Where(x => x != closestBlob && doesBlobHaveLineOfSight(x, closestPoint)).ToList<GameObject>();
             applyForcesOnSubBlobs(otherBlobs,closestPoint);
-            closestBlob.GetComponent<Blob>().attach(closestPoint);
+            closestBlob.GetComponent<Blob>().attach(closestPoint,maxSpeed);
 
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            applyForcesOnSubBlobs(subBlobs, new Vector2(50000,50000));
-        }
+       
     }
 
     void applyForcesOnSubBlobs(List<GameObject> blobs,Vector2 vector)
     {
+
         
-        Vector2 force = (vector * 100);
-        print(blobs.Count + " :: " + force);
+        
         foreach (GameObject go in blobs)
         {
-            go.GetComponent<Rigidbody2D>().AddForce(force,ForceMode2D.Force);
+            Vector2 directionalVector = vector - new Vector2(go.transform.position.x,go.transform.position.y);
+            Vector2 force = directionalVector * 10;
+            Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
+            if (rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+            }else
+            go.GetComponent<Rigidbody2D>().AddForce(force);
         }
     }
 
