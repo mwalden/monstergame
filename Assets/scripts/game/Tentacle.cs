@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Tentacle : MonoBehaviour
 {
+    public enum TentacleState
+    {
+        disabled,
+        casting,
+        extended
+    }
+    public TentacleState tentacleState;
     LineRenderer lineRenderer;
     public float maxLength;
     public float allowedDiff;
@@ -12,6 +19,7 @@ public class Tentacle : MonoBehaviour
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        tentacleState = TentacleState.disabled;
     }
 
     // Update is called once per frame
@@ -19,28 +27,41 @@ public class Tentacle : MonoBehaviour
     {
         if (lineRenderer.enabled)
         {
+            //disables around corners
+            lineRenderer.SetPosition(0, gameObject.transform.parent.position);
+
             Vector3 direction = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
             float dist = (Vector2.Distance(lineRenderer.GetPosition(1), lineRenderer.GetPosition(0)));
             RaycastHit2D ray = Physics2D.Raycast(lineRenderer.GetPosition(0), direction, dist, mask);
 
             if (ray.collider != null)
             {
-
                 if (Vector2.Distance(ray.point, lineRenderer.GetPosition(1)) > allowedDiff)
                 {
-                    print("disabling : " + Vector2.Distance(ray.point, lineRenderer.GetPosition(1)));
+                    tentacleState = TentacleState.disabled;
                     lineRenderer.enabled = false;
                 }
-                    
             }
         }
-        //draw a ray to position(1). if there are no colliders, then keep it. otherwise, remove it. 
-        if (Vector2.Distance(lineRenderer.GetPosition(0),lineRenderer.GetPosition(1)) > maxLength)
+        
 
 
-
-            lineRenderer.enabled = false;
-        else
-            lineRenderer.SetPosition(0, gameObject.transform.parent.position);
     }
+
+    public IEnumerator ExtendTentacle(float time, Vector2 destination)
+    {
+        tentacleState = TentacleState.casting;
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            Vector2 position = Vector2.Lerp(lineRenderer.GetPosition(0), destination, (elapsedTime / time));
+            lineRenderer.SetPosition(1, position);
+            elapsedTime += Time.deltaTime;
+            print(position);
+            yield return null;
+        }
+        tentacleState = TentacleState.extended;
+        
+    }
+
 }

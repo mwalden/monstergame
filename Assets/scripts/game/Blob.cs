@@ -9,7 +9,9 @@ public class Blob : MonoBehaviour
     public int maxTentacles;
     public int armIndex;
     public LineRenderer[] armArray;
-    
+    public float lastTimeBetweenArms;
+    public bool armAllowed;
+    public float extensionTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,7 @@ public class Blob : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
     public void detach()
     {
@@ -35,21 +37,17 @@ public class Blob : MonoBehaviour
 
     public void attach(Vector2 position,float maxSpeed)
     {
-        
-        if (armIndex > 2)
+        if (armIndex >= maxTentacles)
             armIndex = 0;
 
-        LineRenderer lineRenderer = armArray[armIndex].GetComponent<LineRenderer>();
+        LineRenderer lineRenderer = armArray[armIndex];
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, position);
-        
+        //Tentacle tentacle = lineRenderer.GetComponent<Tentacle>();
+        //StartCoroutine(tentacle.ExtendTentacle(extensionTime, position));
         armIndex++;
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Vector2 directionalVector = position - new Vector2(transform.position.x, transform.position.y);
-        Vector2 force = directionalVector * 10;
-        rb.AddForce(force);
     }
 
 
