@@ -2512,7 +2512,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &855904742
@@ -2529,7 +2529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -2693,7 +2693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 6
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &1054080552
@@ -2870,7 +2870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -3034,7 +3034,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &1353703437
@@ -3051,7 +3051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -3215,7 +3215,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &1744663781
@@ -3232,7 +3232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -3396,7 +3396,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &1774170692
@@ -3413,7 +3413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -3602,7 +3602,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &1853546617
@@ -3619,7 +3619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
@@ -3742,7 +3742,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  numberOfRays: 2
+  numberOfRays: 16
   length: 0
   delta: 2
 --- !u!114 &2081940922
@@ -3759,7 +3759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRendererPrefab: {fileID: 7075873027432384404, guid: 20f82e6f3fd9345e99c8b768d9f019a6,
     type: 3}
-  maxTentacles: 2
+  maxTentacles: 8
   armIndex: 0
   armArray: []
   lastTimeBetweenArms: 0
