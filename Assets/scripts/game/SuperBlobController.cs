@@ -32,6 +32,8 @@ public class SuperBlobController : MonoBehaviour
     public float maxSpeed;
     public float appliedForce;
 
+    public GameObject primaryBlob;
+
     void Start()
     {
         subBlobs = new List<GameObject>();
@@ -53,15 +55,17 @@ public class SuperBlobController : MonoBehaviour
             Vector2 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
 
             //we want to only apply force if one active tentacle is out
-            List<Vector2> activeTentacles = getActiveTentacles();
+            List<Vector2> activeTentacles = getActiveTentaclesExtendedPositions();
 
             GameObject closestBlob = findClosestBlob(mousePosition);
+            
             if (closestBlob == null)
                 return;
+            primaryBlob = closestBlob;
             List<Vector2> rays = collectAllRaysByBlob(closestBlob, mousePosition,100);
             if (rays.Count > 0 && activeTentacles.Count>0)
             {
-
+                cam.GetComponent<CameraController>().blob = closestBlob;
                 ClosestVector closestVector = findClosestPoint(rays, mousePosition, true);
                 Vector2 closestPoint = new Vector2(closestVector.x, closestVector.y);
 
@@ -86,7 +90,26 @@ public class SuperBlobController : MonoBehaviour
         }
     }
 
-    List<Vector2> getActiveTentacles()
+    List<Tentacle> GetTentacles()
+    {
+        List<Tentacle> tentacles = new List<Tentacle>();
+        foreach (GameObject go in subBlobs)
+        {
+            Blob blob = go.GetComponent<Blob>();
+            foreach (LineRenderer line in blob.armArray)
+            {
+                Tentacle tentacle = line.GetComponent<Tentacle>();
+                if (tentacle.tentacleState.Equals(Tentacle.TentacleState.extended))
+                {
+                    tentacles.Add(tentacle);
+                }
+
+            }
+        }
+        return tentacles;
+    }
+
+    List<Vector2> getActiveTentaclesExtendedPositions()
     {
         List<Vector2> lines = new List<Vector2>();
         foreach (GameObject go in subBlobs)
@@ -95,7 +118,7 @@ public class SuperBlobController : MonoBehaviour
             foreach (LineRenderer line in blob.armArray)
             {
                 Tentacle tentacle = line.GetComponent<Tentacle>();
-                if (line.enabled)
+                if (line.enabled && tentacle.tentacleState.Equals(Tentacle.TentacleState.extended))
                 {
                     lines.Add(line.GetPosition(1));
                 }
@@ -111,19 +134,35 @@ public class SuperBlobController : MonoBehaviour
         float distance = Vector2.Distance(primaryBlob.transform.position, vector);
         if (distance < 2)
             return;
-        Vector2 directionalVector = vector - new Vector2(primaryBlob.transform.position.x, primaryBlob.transform.position.y);
+        Vector2 blobVector = new Vector2(primaryBlob.transform.position.x, primaryBlob.transform.position.y);
+        //dot product to find out if there is AT LEAST one extended tentacle
+        //that is in the same direction
+        Vector2 directionalVector = vector - blobVector;
+        List<Tentacle> tentacles = GetTentacles();
+        bool hasTentacleInFront = false;
+        foreach (Tentacle tentacle in tentacles)
+        {
+            //GetTentacles() only returns extended tentacles
+            Vector2 tentacleExtendedPosition = tentacle.GetComponent<LineRenderer>().GetPosition(1);
+            Vector2 blobToTentacleDirection = tentacleExtendedPosition - blobVector;
+            float dotProduct = Vector2.Dot(blobToTentacleDirection.normalized, directionalVector.normalized);
+            if (dotProduct > .75)
+                hasTentacleInFront = true;
+        }
+        if (!hasTentacleInFront)
+        {
+            print("no tentacle in front");
+            return;
+        }
+        
         foreach (GameObject go in blobs)
         {            
             Vector2 force = directionalVector * appliedForce;
             Rigidbody2D rb = go.GetComponent<Rigidbody2D>();
             if (rb.velocity.magnitude > maxSpeed)
-            {
                 rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
-            }
             else
-            {
-                rb.AddForce(force);
-            }
+               rb.AddForce(force);
                 
         }
     }
@@ -165,6 +204,7 @@ public class SuperBlobController : MonoBehaviour
         return rays;
     }
 
+    //we may have to take into account if its extended or not .
     bool isThisPointTooCloseToAllTentacles(List<Vector2> tentacleLocations, Vector2 point)
     {
         if (tentacleLocations.Count == 0)
@@ -178,7 +218,7 @@ public class SuperBlobController : MonoBehaviour
     ClosestVector findClosestPoint(List<Vector2> rays, Vector2 mousePosition, bool ignoreTentacleLocation)
     {
         Vector2 closestRay = new Vector2(int.MaxValue,int.MaxValue);
-        List<Vector2> activeTentacles = getActiveTentacles();
+        List<Vector2> activeTentacles = getActiveTentaclesExtendedPositions();
         ClosestVector closest = new ClosestVector(false);
         foreach (Vector2 ray in rays)
         {

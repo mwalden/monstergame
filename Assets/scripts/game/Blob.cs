@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Blob : MonoBehaviour
 {
-
+    //the tentacle objects are added as children and stored in the armArray.
     public LineRenderer lineRendererPrefab;
     public int maxTentacles;
     public int armIndex;
     public LineRenderer[] armArray;
+    
     public float lastTimeBetweenArms;
     public bool armAllowed;
     public float extensionTime;
-    // Start is called before the first frame update
+    
     void Start()
     {
         armArray = new LineRenderer[maxTentacles];
@@ -24,17 +25,6 @@ public class Blob : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-    public void detach()
-    {
-        //activeLine.enabled = false;
-        //Object.Destroy(activeSpring);
-    }
-
     public void attach(Vector2 position,float maxSpeed)
     {
         if (armIndex >= maxTentacles)
@@ -43,9 +33,9 @@ public class Blob : MonoBehaviour
         LineRenderer lineRenderer = armArray[armIndex];
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, position);
-        //Tentacle tentacle = lineRenderer.GetComponent<Tentacle>();
-        //StartCoroutine(tentacle.ExtendTentacle(extensionTime, position));
+        //lineRenderer.SetPosition(1, position);
+        Tentacle tentacle = lineRenderer.GetComponent<Tentacle>();
+        StartCoroutine(tentacle.ExtendTentacle(extensionTime, position));
         armIndex++;
 
     }
