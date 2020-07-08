@@ -11,6 +11,8 @@ public class RaysOverRadius : MonoBehaviour
     [Range(0, 180)]
     public float delta;
 
+    public bool topRays = false;
+
     public List<Vector2> findPoints(Vector3 vector,float distanceMultipler)
     {
         List<Vector2> points = new List<Vector2>();
@@ -18,34 +20,40 @@ public class RaysOverRadius : MonoBehaviour
         Debug.DrawRay(transform.position, vector - transform.position, Color.red);
         for (int i = 0;i< numberOfRays; i++)
         {
-            Quaternion rotation = Quaternion.AngleAxis(delta*i, Vector3.forward);
-            Vector2 rotatedDirection = rotation * direction;
-            float dist = (Vector2.Distance(rotatedDirection,transform.position  ) * distanceMultipler);
-            Debug.DrawRay(transform.position, rotatedDirection, Color.green);
-            RaycastHit2D ray = Physics2D.Raycast(transform.position, rotatedDirection, dist, mask);
-
-            if (ray.collider != null)
+            if (topRays)
             {
-                points.Add(ray.point);
+                Quaternion rotation = Quaternion.AngleAxis(delta * i, Vector3.forward);
+                Vector2 rotatedDirection = rotation * direction;
+                float dist = (Vector2.Distance(rotatedDirection, transform.position) * distanceMultipler);
+                Debug.DrawRay(transform.position, rotatedDirection, Color.green);
+                RaycastHit2D ray = Physics2D.Raycast(transform.position, rotatedDirection, dist, mask);
+
+                if (ray.collider != null && topRays)
+                {
+                    points.Add(ray.point);
+                }
             }
+            else { 
+                Quaternion rotationDown = Quaternion.AngleAxis(delta * -i, Vector3.forward);
 
-            Quaternion rotationDown = Quaternion.AngleAxis(delta * -i, Vector3.forward);
-
-            Vector2 rotatedDirectionDown = rotationDown * direction;
+                Vector2 rotatedDirectionDown = rotationDown * direction;
             
-            Vector2 normizedDirectionDown = rotatedDirectionDown.normalized;
-            float distDown = (Vector2.Distance(transform.position, rotatedDirectionDown));
-            RaycastHit2D rayDown = Physics2D.Raycast(transform.position, normizedDirectionDown, distDown, mask);
+                Vector2 normizedDirectionDown = rotatedDirectionDown.normalized;
+                float distDown = (Vector2.Distance(transform.position, rotatedDirectionDown));
+                RaycastHit2D rayDown = Physics2D.Raycast(transform.position, normizedDirectionDown, distDown, mask);
 
-            if (rayDown.collider != null)
-            {
-                points.Add(rayDown.point);
+                if (rayDown.collider != null && !topRays)
+                {
+                    points.Add(rayDown.point);
+                }
+                Debug.DrawRay(transform.position, rotatedDirectionDown, Color.green);
             }
 
+            
 
-
-            Debug.DrawRay(transform.position, rotatedDirectionDown, Color.green);
+            
         }
+        topRays = !topRays;
         return points;
     }
 }
